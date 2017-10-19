@@ -1,13 +1,12 @@
 CXX = g++
 
 SRCDIR=./
-COMMDIR=./webrtc_main
+COMMDIR=./main
 NSDIR=./ns
 SIGNDIR=./ns_base
 RESAMPLE=./resample
 CCFILES += \
 		$(NSDIR)/noise_suppression_x.c \
-		$(COMMDIR)/main.c \
 		$(NSDIR)/nsx_core.c \
 		$(NSDIR)/real_fft.c \
 		$(SIGNDIR)/spl_init.c \
@@ -27,7 +26,8 @@ CCFILES += \
 		$(RESAMPLE)/resample.c \
 		$(RESAMPLE)/resample_by_2_internal.c \
 		$(RESAMPLE)/resample_fractional.c \
-		$(COMMDIR)/nsx_main.c \
+		$(NSDIR)/nsx_main.c \
+		$(COMMDIR)/main.c \
 
 HFILES += \
 		$(NSDIR)/windows_private.h \
@@ -40,7 +40,7 @@ HFILES += \
 		$(NSDIR)/noise_suppression_x.h \
 		$(NSDIR)/signal_processing_library.h \
 		$(NSDIR)/real_fft.h \
-		$(COMMDIR)/nsx_main.h \
+		$(NSDIR)/nsx_main.h \
 		$(RESAMPLE)/resample.h \
 		$(RESAMPLE)/resample_by_2_internal.h \
 		$(NSDIR)/spl_inl.h 
