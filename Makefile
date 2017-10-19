@@ -6,6 +6,7 @@ NSDIR=./ns
 SIGNDIR=./ns_base
 GCADIR=./agc
 RESAMPLE=./resample
+SIG_DIR=./signal_processing
 CCFILES += \
 		$(NSDIR)/noise_suppression_x.c \
 		$(NSDIR)/nsx_core.c \
@@ -27,6 +28,8 @@ CCFILES += \
 		$(RESAMPLE)/resample.c \
 		$(RESAMPLE)/resample_by_2_internal.c \
 		$(RESAMPLE)/resample_fractional.c \
+		$(SIG_DIR)/dot_product_with_scale.c \
+		$(SIG_DIR)/spl_sqrt.c \
 		$(GCADIR)/analog_agc.c \
 		$(GCADIR)/digital_agc.c \
 		$(GCADIR)/agc_main.c \
