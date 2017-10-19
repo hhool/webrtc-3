@@ -1,5 +1,8 @@
 
-#include "gain.control.h"
+#include "gain_control.h"
+#include "typedefs.h"
+#include "common_types.h"
+#include <stdio.h>
 
 void *g_agcHandle = NULL;
 
@@ -11,6 +14,7 @@ void webrtc_agc_init()
 		int minLevel = 0;
 		int maxLevel = 255;
 		int agcMode  = kAgcModeFixedDigital;
+		int fs = 16000;
 		WebRtcAgc_Init(g_agcHandle, minLevel, maxLevel, agcMode, fs);
 
 		WebRtcAgc_config_t agcConfig;
@@ -33,7 +37,7 @@ void webrtc_agc_process(short *shBufferIn, short *shBufferOut)
     if (nAgcRet != 0)
     {
     	printf("failed in WebRtcAgc_Process\n");
-    	break;
+    	return;
     }
     micLevelIn = outMicLevel;
 

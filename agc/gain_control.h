@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_AUDIO_PROCESSING_AGC_INCLUDE_GAIN_CONTROL_H_
 #define WEBRTC_MODULES_AUDIO_PROCESSING_AGC_INCLUDE_GAIN_CONTROL_H_
 
-#include "webrtc/typedefs.h"
+#include "typedefs.h"
 
 // Errors
 #define AGC_UNSPECIFIED_ERROR           18000
@@ -22,6 +22,7 @@
 
 // Warnings
 #define AGC_BAD_PARAMETER_WARNING       18050
+
 
 enum
 {

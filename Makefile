@@ -4,6 +4,7 @@ SRCDIR=./
 COMMDIR=./main
 NSDIR=./ns
 SIGNDIR=./ns_base
+GCADIR=./agc
 RESAMPLE=./resample
 CCFILES += \
 		$(NSDIR)/noise_suppression_x.c \
@@ -26,12 +27,18 @@ CCFILES += \
 		$(RESAMPLE)/resample.c \
 		$(RESAMPLE)/resample_by_2_internal.c \
 		$(RESAMPLE)/resample_fractional.c \
+		$(GCADIR)/analog_agc.c \
+		$(GCADIR)/digital_agc.c \
+		$(GCADIR)/agc_main.c \
 		$(NSDIR)/nsx_main.c \
 		$(COMMDIR)/main.c \
 
 HFILES += \
 		$(NSDIR)/windows_private.h \
 		$(SRCDIR)/hal_trace.h \
+		$(GCADIR)/analog_agc.h \
+		$(GCADIR)/digital_agc.h \
+		$(GCADIR)/gain_control.h \
 		$(NSDIR)/typedefs.h \
 		$(NSDIR)/cpu_features_wrapper.h \
 		$(NSDIR)/nsx_core.h \
@@ -43,6 +50,9 @@ HFILES += \
 		$(NSDIR)/nsx_main.h \
 		$(RESAMPLE)/resample.h \
 		$(RESAMPLE)/resample_by_2_internal.h \
+		$(COMMDIR)/typedefs.h \
+		$(COMMDIR)/common_types.h \
+		$(COMMDIR)/config.h \
 		$(NSDIR)/spl_inl.h 
 
 LD_FLAGS         = -lm 

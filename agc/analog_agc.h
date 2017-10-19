@@ -11,9 +11,9 @@
 #ifndef WEBRTC_MODULES_AUDIO_PROCESSING_AGC_MAIN_SOURCE_ANALOG_AGC_H_
 #define WEBRTC_MODULES_AUDIO_PROCESSING_AGC_MAIN_SOURCE_ANALOG_AGC_H_
 
-#include "webrtc/modules/audio_processing/agc/digital_agc.h"
-#include "webrtc/modules/audio_processing/agc/include/gain_control.h"
-#include "webrtc/typedefs.h"
+#include "digital_agc.h"
+#include "gain_control.h"
+#include "typedefs.h"
 
 //#define AGC_DEBUG
 //#define MIC_LEVEL_FEEDBACK
