@@ -19,36 +19,23 @@ void webrtc_agc_init()
 		agcConfig.targetLevelDbfs   = 6;
 		WebRtcAgc_set_config(g_agcHandle, agcConfig);
 }
-void WebRtcNsx_denoise_init(int nSample,int nMode)
+
+int micLevelIn = 0;
+int micLevelOut = 0;
+int frameSize = 80;
+
+void webrtc_agc_process(short *shBufferIn, short *shBufferOut)
 {
-    int ret_val;
-    unsigned int count = 1;
-
-    ret_val = WebRtcNsx_Create(&ppNsxHandle);
-    //ASSERT(0 == WebRtcNsx_Create(&ppNsxHandle), "WebRtcNsx_Create failed");
-
- //   TRACE("WebRtcNs_denoise_initaaa:%d ",ret_val);
-
-    ret_val = WebRtcNsx_Init(ppNsxHandle,nSample);
-    //ASSERT(0 == WebRtcNsx_Init(ppNsxHandle,nSample), "WebRtcNsx_Init failed");
-
- //   TRACE("WebRtcNs_denoise_initbbb:%d ",ret_val);
-
-    ret_val = WebRtcNsx_set_policy(ppNsxHandle,nMode);
-    //ASSERT(0 == WebRtcNsx_set_policy(ppNsxHandle,nMode), "WebRtcNsx_set_policy failed");
-
-    TRACE("WebRtcNs_denoise_initcccc:%d \n",ret_val);
-
-}
-
-void WebRtcNsx_Alg_Process(short *shBufferIn, short *shBufferOut)
-{
-    int ret_val;
-
-  //  DEBUG2("WebRtcNs_denoise_initcccc:%d ",ret_val);
-    ret_val = WebRtcNsx_Process(ppNsxHandle, shBufferIn, NULL, shBufferOut, NULL);
-
-    //ASSERT(0 == ret_val, "failed in WebRtcNsx_Process :%d ",ret_val);
+    int inMicLevel  = micLevelOut;
+    int outMicLevel = 0;
+    uint8_t saturationWarning;
+    int nAgcRet = WebRtcAgc_Process(g_agcHandle, shBufferIn, NULL, frameSize, shBufferOut,NULL, inMicLevel, &outMicLevel, 0, &saturationWarning);
+    if (nAgcRet != 0)
+    {
+    	printf("failed in WebRtcAgc_Process\n");
+    	break;
+    }
+    micLevelIn = outMicLevel;
 
 }
 
