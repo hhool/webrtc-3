@@ -31,6 +31,11 @@
 
 #define MAXSTRLEN 1024
 
+#ifdef WEBRTC_AGC
+extern void webrtc_agc_init();
+extern void webrtc_agc_process(short *shBufferIn, short *shBufferOut);
+#endif
+
 void* state1_;
 void* state2_;
 void* state3_;
@@ -57,6 +62,10 @@ int main(int argc, char *argv[])
     WebRtcNsx_denoise_init(16000,2);
 #endif
 
+#ifdef WEBRTC_AGC
+    webrtc_agc_init();
+#endif
+
     FILE *inFp  = fopen(fileIn,"r");
     FILE *outFp = fopen(fileOut,"w");
     if(inFp == NULL || outFp == NULL)
@@ -80,20 +89,39 @@ int main(int argc, char *argv[])
     int tempSize_16k = 160;
     short *in_16k  = (short*)calloc(tempSize_16k, sizeof(short));
     short *out_16k = (short*)calloc(tempSize_16k, sizeof(short));
-   // int pcmLen = tempSize;
+    int pcmLen = tempSize_16k;
     
     start = clock();
 
     while(pcmLen > 0)
     {
+
+#ifdef RESAMPLER
         pcmLen = fread(in_48k, sizeof(short), tempSize_48k, inFp);
 	WebRtcSpl_Resample48khzTo16khz(in_48k,in_16k,(WebRtcSpl_State48khzTo16khz*)state2_,tmp_buff);
 #ifdef WEBRTC_NSX
+sadf
       	WebRtcNsx_Alg_Process(in_16k,out_16k);
 #endif
-	WebRtcSpl_Resample16khzTo48khz(out_16k,out_48k,(WebRtcSpl_State16khzTo48khz*)state3_,tmp_mem_out);
+
+#ifdef WEBRTC_AGC
+//	webrtc_agc_process(in_16k,out_16k);
+#endif
+
+	//WebRtcSpl_Resample16khzTo48khz(out_16k,out_48k,(WebRtcSpl_State16khzTo48khz*)state3_,tmp_mem_out);
+	WebRtcSpl_Resample16khzTo48khz(in_16k,out_48k,(WebRtcSpl_State16khzTo48khz*)state3_,tmp_mem_out);
         pcmLen = fwrite(out_48k, sizeof(short), pcmLen, outFp);
 	count++;
+#else
+        pcmLen = fread(in_16k, sizeof(short), tempSize_16k, inFp);
+
+#ifdef WEBRTC_AGC
+	webrtc_agc_process(in_16k,out_16k);
+#endif
+
+	count++;
+        pcmLen = fwrite(out_16k, sizeof(short), pcmLen, outFp);
+#endif
     }
 
  //   test_func_web();

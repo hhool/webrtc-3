@@ -1489,7 +1489,7 @@ int WebRtcAgc_Create(void **agcInst)
     {
         return -1;
     }
-    #if 0
+    #if 1
     stt = (Agc_t *)malloc(sizeof(Agc_t));
    #else
    stt = (Agc_t *)agc_static;

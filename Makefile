@@ -40,6 +40,7 @@ HFILES += \
 		$(NSDIR)/windows_private.h \
 		$(SRCDIR)/hal_trace.h \
 		$(GCADIR)/analog_agc.h \
+		$(GCADIR)/agc_main.h \
 		$(GCADIR)/digital_agc.h \
 		$(GCADIR)/gain_control.h \
 		$(NSDIR)/typedefs.h \
@@ -63,7 +64,7 @@ LD_FLAGS         = -lm
 LD_LIBS          = 
 
 #DEFS             = -DSTATIC_MEM -DWEBRTC_NSX -DNSX_CODE_UNUSE=1
-DEFS             = -DSTATIC_MEM -DWEBRTC_NSX -DRESAMPLER=1
+DEFS             = -DSTATIC_MEM -DWEBRTC_AGC=1
 
 OBJS             += $(patsubst %.c,%.c.o, $(CCFILES))
 

@@ -6,7 +6,6 @@
 
 void *g_agcHandle = NULL;
 
-
 void webrtc_agc_init()
 {
     	WebRtcAgc_Create(&g_agcHandle);
@@ -18,15 +17,15 @@ void webrtc_agc_init()
 		WebRtcAgc_Init(g_agcHandle, minLevel, maxLevel, agcMode, fs);
 
 		WebRtcAgc_config_t agcConfig;
-		agcConfig.compressionGaindB = 31;
+		agcConfig.compressionGaindB = 6;
 		agcConfig.limiterEnable     = 1;
-		agcConfig.targetLevelDbfs   = 6;
+		agcConfig.targetLevelDbfs   = 3;
 		WebRtcAgc_set_config(g_agcHandle, agcConfig);
 }
 
 int micLevelIn = 0;
 int micLevelOut = 0;
-int frameSize = 80;
+int frameSize = 160;
 
 void webrtc_agc_process(short *shBufferIn, short *shBufferOut)
 {
